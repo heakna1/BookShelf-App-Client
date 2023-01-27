@@ -51,9 +51,7 @@ showBookContainer.addEventListener('submit', (event) => {
 
     const bookData = {
         book: {
-            title: event.target['title'].value,
-            author: event.target['author'].value,
-            genre: event.target['genre'].value
+            page: event.target['page'].value,
         },
     }
 
