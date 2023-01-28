@@ -3,9 +3,21 @@ import {
     onIndexBookSuccess, onBookFailure, onCreateBookSuccess, onShowBookSuccess, onUpdateBookSuccess, onDeleteBookSuccess
 } from './ui.js'
 
-const createBookForm = document.querySelector('#create-book-form')
-const indexBookContainer = document.querySelector('#index-book-container')
-const showBookContainer = document.querySelector('#show-book-container')
+// const createBookForm = document.querySelector('#create-book-form')
+// const indexBookContainer = document.querySelector('#index-book-container')
+// const showBookContainer = document.querySelector('#show-book-container')
+const userLoginContainer = document.querySelector(".user-login-container")
+const bookShelfContainer = document.querySelector('.bookshelf-container')
+const signInButton = document.getElementById("sign-in-button")
+
+const bookShelfPage = () => {
+    bookShelfContainer.classList.remove("d-none")
+    userLoginContainer.classList.add("d-none")
+}
+signInButton.addEventListener("click", (e) => {
+    e.preventDefault()
+    bookShelfPage()
+})
 
 indexBook()
     .then(res => res.json())
@@ -79,9 +91,9 @@ import {
     onIndexReviewSuccess, onReviewFailure, onCreateReviewSuccess, onShowReviewSuccess, onUpdateReviewSuccess, onDeleteReviewSuccess
 } from './ui.js'
 
-const createReviewForm = document.querySelector('#create-review-form')
-const indexReviewContainer = document.querySelector('#index-review-container')
-const showReviewContainer = document.querySelector('#show-review-container')
+// const createReviewForm = document.querySelector('#create-review-form')
+// const indexReviewContainer = document.querySelector('#index-review-container')
+// const showReviewContainer = document.querySelector('#show-review-container')
 
 indexReview()
     .then(res => res.json())

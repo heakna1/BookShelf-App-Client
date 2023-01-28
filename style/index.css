@@ -1,0 +1,5 @@
+.shelf {
+    border-bottom: 10mm solid #C1B2A2;
+    filter: drop-shadow(0px 5px 5px gray);
+    border-radius: 2px;
+}
