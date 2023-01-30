@@ -1,5 +1,26 @@
-.logo {
-    font-family: 'Fredoka One', cursive;
+.title-container {
+    background-color: #F2D1CE;
+    border-bottom: 1mm solid;
+    color: white
+}
+
+.user-login-container {
+    padding: 50px;
+}
+
+#logo {
+    font-family: "Fredoka One", cursive;
+    font-size: 50px;
+    /* color: #BF9999 */
+    color: #BF8F84
+}
+
+#collection {
+    font-family: "Fredoka One", cursive;
+    font-size: 40px;
+    color: #718C35;
+    padding: 50px;
+    
 }
 
 .shelf {
@@ -8,7 +29,7 @@
     border-radius: 2px;
 }
 
-/* .bg-pink {
+/* .bg-white {
     background-color: #E0C6AD;
 } */
 
@@ -16,4 +37,5 @@
     width: 100px;
     height: 150px;
     font-size: 30px;
+    background-color: white;
 }
