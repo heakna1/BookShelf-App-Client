@@ -1,5 +1,19 @@
+.logo {
+    font-family: 'Fredoka One', cursive;
+}
+
 .shelf {
-    border-bottom: 10mm solid #C1B2A2;
+    border-bottom: 10mm solid #E0C6AD;
     filter: drop-shadow(0px 5px 5px gray);
     border-radius: 2px;
+}
+
+/* .bg-pink {
+    background-color: #E0C6AD;
+} */
+
+.btn-book {
+    width: 100px;
+    height: 150px;
+    font-size: 30px;
 }

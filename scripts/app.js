@@ -1,25 +1,74 @@
-import { indexBook, createBook, showBook, updateBook, deleteBook } from './api.js'
+import { 
+    indexBooks, 
+    createBook, 
+    showBook, 
+    updateBook, 
+    deleteBook,
+    signUp,
+    signIn,
+    createReview,
+    showReview,
+    updateReview, 
+    deleteReview } from "./api.js"
 import {
-    onIndexBookSuccess, onBookFailure, onCreateBookSuccess, onShowBookSuccess, onUpdateBookSuccess, onDeleteBookSuccess
-} from './ui.js'
+    onIndexBookSuccess, 
+    onCreateBookSuccess, 
+    onShowBookSuccess, 
+    onUpdateBookSuccess, 
+    onDeleteBookSuccess,
+    onBookFailure, 
+    onSignUpSuccess,
+    onSignInSuccess,
+    onLoginFailure,
+    onIndexReviewSuccess,
+    onShowReviewSuccess,
+    onUpdateReviewSuccess,
+    onDeleteReviewSuccess,
+    onReviewFailure
+} from "./ui.js"
 
-// const createBookForm = document.querySelector('#create-book-form')
-// const indexBookContainer = document.querySelector('#index-book-container')
-// const showBookContainer = document.querySelector('#show-book-container')
+const createBookForm = document.querySelector(".create-book-form")
+const showBookContainer = document.querySelector(".show-book-container")
 const userLoginContainer = document.querySelector(".user-login-container")
-const bookShelfContainer = document.querySelector('.bookshelf-container')
-const signInButton = document.getElementById("sign-in-button")
+const indexBookContainer = document.querySelector(".index-book-container")
+const signInButton = document.querySelector(".sign-in-button")
+const signUpContainer = document.querySelector("#sign-up-form-container")
+const signInContainer = document.querySelector("#sign-in-form-container")
 
-const bookShelfPage = () => {
-    bookShelfContainer.classList.remove("d-none")
-    userLoginContainer.classList.add("d-none")
-}
-signInButton.addEventListener("click", (e) => {
-    e.preventDefault()
-    bookShelfPage()
+// User Actions
+signUpContainer.addEventListener("submit", (event) => {
+	event.preventDefault()
+	const userData = {
+		credentials: {
+			email: event.target["sign-up-email"].value,
+			password: event.target["sign-up-password"].value,
+		},
+	}
+	signUp(userData).then(onSignUpSuccess).catch(onLoginFailure)
 })
 
-indexBook()
+signInContainer.addEventListener("submit", (event) => {
+	event.preventDefault()
+	const userData = {
+		credentials: {
+			email: event.target["email"].value,
+			password: event.target["password"].value,
+		},
+	}
+	signIn(userData)
+		.then((res) => res.json())
+		.then((res) => onSignInSuccess(res.token))
+		.then(indexCampaign)
+		.then((res) => res.json())
+		.then((res) => onIndexCampaignSuccess(res.campaigns))
+		.then(indexCharacters)
+		.then((res) => res.json())
+		.then((res) => onIndexCharacterSuccess(res.characters))
+		.catch(onLoginFailure)
+})
+
+//BOOK
+indexBooks()
     .then(res => res.json())
     .then(res => {
         console.log(res)
@@ -28,25 +77,25 @@ indexBook()
     .catch(onBookFailure)
 
 
-createBookForm.addEventListener('submit', (event) => {
+createBookForm.addEventListener("submit", (event) => {
     event.preventDefault()
 
     const bookData = {
         book: {
-            title: event.target['title'].value,
-            author: event.target['author'].value,
-            genre: event.target['genre'].value
+            title: event.target["book-title"].value,
+            author: event.target["book-author"].value,
+            genre: event.target["book-genre"].value,
+            isbn: event.target["book-isbn"].value
         },
     }
 
-    // console.log(campiagnData)
     createBook(bookData)
         .then(onCreateBookSuccess)
         .catch(onBookFailure)
 })
 
-indexBookContainer.addEventListener('click', (event) => {
-    const id = event.target.getAttribute('data-id')
+indexBookContainer.addEventListener("click", (event) => {
+    const id = event.target.getAttribute("data-id")
 
     if (!id) return
 
@@ -56,14 +105,14 @@ indexBookContainer.addEventListener('click', (event) => {
         .catch(onBookFailure)
 })
 
-showBookContainer.addEventListener('submit', (event) => {
+showBookContainer.addEventListener("submit", (event) => {
     event.preventDefault()
 
-    const id = event.target.getAttribute('data-id')
+    const id = event.target.getAttribute("data-id")
 
     const bookData = {
         book: {
-            page: event.target['page'].value,
+            page: event.target["page"].value,
         },
     }
 
@@ -75,8 +124,8 @@ showBookContainer.addEventListener('submit', (event) => {
         .catch(onBookFailure)
 })
 
-showBookContainer.addEventListener('click', (event) => {
-    const id = event.target.getAttribute('data-id')
+showBookContainer.addEventListener("click", (event) => {
+    const id = event.target.getAttribute("data-id")
 
     if (!id) return
 
@@ -86,15 +135,6 @@ showBookContainer.addEventListener('click', (event) => {
 })
 
 //REVIEW
-import { indexReview, createReview, showReview, updateReview, deleteReview } from './api.js'
-import {
-    onIndexReviewSuccess, onReviewFailure, onCreateReviewSuccess, onShowReviewSuccess, onUpdateReviewSuccess, onDeleteReviewSuccess
-} from './ui.js'
-
-// const createReviewForm = document.querySelector('#create-review-form')
-// const indexReviewContainer = document.querySelector('#index-review-container')
-// const showReviewContainer = document.querySelector('#show-review-container')
-
 indexReview()
     .then(res => res.json())
     .then(res => {
@@ -104,25 +144,23 @@ indexReview()
     .catch(onReviewFailure)
 
 
-createReviewForm.addEventListener('submit', (event) => {
+createReviewForm.addEventListener("submit", (event) => {
     event.preventDefault()
 
     const reviewData = {
         review: {
-            rate: event.target['rate'].value,
-            comment: event.target['comment'].value
+            rate: event.target["rate"].value,
+            comment: event.target["comment"].value
         },
     }
 
-    // console.log(reviewData)
     createReview(reviewData)
         .then(onCreateReviewSuccess)
         .catch(onReviewFailure)
 })
 
-indexReviewContainer.addEventListener('click', (event) => {
-    const id = event.target.getAttribute('data-id')
-    // console.log(id)
+indexReviewContainer.addEventListener("click", (event) => {
+    const id = event.target.getAttribute("data-id")
 
     if (!id) return
 
@@ -132,15 +170,15 @@ indexReviewContainer.addEventListener('click', (event) => {
         .catch(onReviewFailure)
 })
 
-showReviewContainer.addEventListener('submit', (event) => {
+showReviewContainer.addEventListener("submit", (event) => {
     event.preventDefault()
 
-    const id = event.target.getAttribute('data-id')
+    const id = event.target.getAttribute("data-id")
 
     const reviewData = {
         review: {
-            rate: event.target['rate'].value,
-            comment: event.target['comment'].value
+            rate: event.target["rate"].value,
+            comment: event.target["comment"].value
         },
     }
 
@@ -152,8 +190,8 @@ showReviewContainer.addEventListener('submit', (event) => {
         .catch(onReviewFailure)
 })
 
-showReviewContainer.addEventListener('click', (event) => {
-    const id = event.target.getAttribute('data-id')
+showReviewContainer.addEventListener("click", (event) => {
+    const id = event.target.getAttribute("data-id")
 
     if (!id) return
 
