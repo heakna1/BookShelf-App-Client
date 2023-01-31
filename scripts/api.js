@@ -74,7 +74,7 @@ export const deleteBook = (id) => {
 }
 
 //REVIEW
-export const indexReview = () => {
+export const indexReviews = () => {
     return fetch(`http://localhost:2000/reviews`, {
         headers: {
             "Authorization": `Bearer ${store.userToken}`

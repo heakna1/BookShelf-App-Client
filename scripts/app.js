@@ -7,6 +7,7 @@ import {
     signUp,
     signIn,
     createReview,
+    indexReviews,
     showReview,
     updateReview, 
     deleteReview } from "./api.js"
@@ -27,13 +28,16 @@ import {
     onReviewFailure
 } from "./ui.js"
 
-const createBookForm = document.querySelector(".create-book-form")
-const showBookContainer = document.querySelector(".show-book-container")
 const userLoginContainer = document.querySelector(".user-login-container")
-const indexBookContainer = document.querySelector(".index-book-container")
 const signInButton = document.querySelector(".sign-in-button")
 const signUpContainer = document.querySelector("#sign-up-form-container")
 const signInContainer = document.querySelector("#sign-in-form-container")
+const createBookForm = document.querySelector(".create-book-form")
+const indexBookContainer = document.querySelector(".index-book-container")
+const showBookContainer = document.querySelector(".show-book-container")
+const createReviewForm = document.querySelector(".create-review-form")
+const indexReviewContainer = document.querySelector(".index-review-container")
+const showReviewContainer = document.querySelector(".show-review-container")
 
 // User Actions
 signUpContainer.addEventListener("submit", (event) => {
@@ -135,7 +139,7 @@ showBookContainer.addEventListener("click", (event) => {
 })
 
 //REVIEW
-indexReview()
+indexReviews()
     .then(res => res.json())
     .then(res => {
         console.log(res)

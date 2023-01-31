@@ -1,5 +1,6 @@
 const indexBookContainer = document.querySelector(".index-book-container")
 const messageContainer = document.querySelector("#message-container")
+const signUpMessage = document.querySelector("#sign-up-message")
 const showBookContainer = document.querySelector("#show-book-container")
 const userLoginContainer = document.querySelector(".user-login-container")
 const loginButton = document.querySelector("#login-button")
@@ -56,6 +57,11 @@ export const onDeleteBookSuccess = () => {
     messageContainer.innerText = "Book deleted"
 }
 
+`<!-- Button trigger modal -->
+<button type="button" class="btn-update-book" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Update
+</button>`
+
 //REVIEW
 
 export const onIndexReviewSuccess = (reviews) => {
@@ -104,9 +110,14 @@ export const onDeleteReviewSuccess = () => {
     messageContainer.innerText = "Review deleted"
 }
 
+`<!-- Button trigger modal -->
+<button type="button" class="btn-update-review" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Update
+</button>`
+
 // User Actions
 export const onSignUpSuccess = () => {
-    messageContainer.innerHTML = "User created"
+    signUpMessage.innerHTML = "User created"
 }
 
 export const onSignInSuccess = (userToken) => {
@@ -114,6 +125,8 @@ export const onSignInSuccess = (userToken) => {
     store.userToken = userToken
     userLoginContainer.classList.add("d-none")
     indexBookContainer.classList.remove("d-none")
+    messageContainer.classList.remove("d-none")
+    signUpMessage.classList.add("d-none")
 }
 
 export const onLoginFailure = (error) => {
