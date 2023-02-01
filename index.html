@@ -42,8 +42,8 @@
         </div>
         <div class="row shelf mx-5">
             <div class="show-book-container col-1">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> +
+                <!-- Button trigger create book modal -->
+                <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#new-book-modal"> +
                 </button>
             </div>
         </div>
@@ -108,8 +108,8 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <!-- Create Book Modal -->
+    <div class="modal fade" id="new-book-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -136,6 +136,75 @@
                             <label for="book-isbn" class="for-label">ISBN</label>
                         </div>
                     </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" form="create-book-button" class="btn btn-primary"
+                        data-bs-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Edit Modal-->
+    <div class="modal fade" id="edit-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="update-tab" data-bs-toggle="tab"
+                                data-bs-target="#edit-tab-pane" type="button" role="tab"
+                                aria-controls="edit-tab-pane" aria-selected="true">Edit</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="review-tab" data-bs-toggle="tab"
+                                data-bs-target="#review-tab-pane" type="button" role="tab"
+                                aria-controls="review-tab-pane" aria-selected="false">Write Review</button>
+                        </li>
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="edit-tab-pane" role="tabpanel"
+                            aria-labelledby="edit-tab" tabindex="0">
+                            <form id="edit-modal-form" class="edit-modal col">
+                                <div class="form-floating">
+                                    <input type="title" id="edit-book-title" class="form-control" placeholder="Place title here">
+                                    <label for="edit-book-title" class="for-label">Title</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input type="author" id="edit-book-author" class="form-control" placeholder="Place author here">
+                                    <label for="edit-book-author" class="for-label">Author</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input type="genre" id="edit-book-genre" class="form-control" placeholder="Place genre here">
+                                    <label for="edit-book-genre" class="for-label">Genre</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input type="isbn" id="edit-book-isbn" class="form-control" placeholder="Place isbn here">
+                                    <label for="edit-book-isbn" class="for-label">ISBN</label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade show active" id="review-tab-pane" role="tabpanel"
+                            aria-labelledby="review-tab" tabindex="0">
+                            <form id="review-modal-form" class="review-modal col">
+                                <div class="form-floating">
+                                    <input type="page-number" id="book-page" class="form-control"
+                                        placeholder="Place page number here">
+                                    <label for="book-page" class="for-label">Page Number</label>
+                                </div>
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="Leave a comment here" id="book-comment"
+                                        style="height: 100px"></textarea>
+                                    <label for="book-comment">Comment</label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" form="create-book-button" class="btn btn-primary"

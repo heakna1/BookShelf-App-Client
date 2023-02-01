@@ -9,14 +9,29 @@ const showReviewContainer = document.querySelector("#show-review-container")
 
 import { store } from "./store.js"
 
+//BOOK
 export const onIndexBookSuccess = (books) => {
+    const bookCount = 0
+    
     books.forEach(book => {
+        if(bookCount % 4 == 0) {
+            let bookShelf = document.createElement("div")
+            bookShelf.classList.add("row", "shelf")
+        }
         const div = document.createElement("div")
+        div.classList.add("show-book-container", "col-1")
         div.innerHTML = `
-            <h3>${book.title}</h3>
-            <button data-id="${book._id}" >Show Book</button>
+            <!-- Button trigger edit modal -->
+            <button data-id="${book._id}" type="button" class="btn-edit-book" data-bs-toggle="modal" data-bs-target="#edit-modal" style="display:inline-block">
+            <img src="${book.bookCoverUrl}" style="float:left"/>
+            </button>
         `
-        indexBookContainer.appendChild(div)
+        bookShelf.appendChild(div)
+
+        if(bookShelf.childElementCount == 4) {
+            indexBookContainer.appendChild(bookShelf)
+        }
+        bookCount += 1
     })
 }
 
@@ -41,7 +56,10 @@ export const onShowBookSuccess = (book) => {
         <p>${book._id}</p>
 
         <form data-id="${book._id}">
-            <input type="text" name="page" value="${book.page}"/>
+            <input type="text" name="page" value="${book.title}"/>
+            <input type="text" name="page" value="${book.author}"/>
+            <input type="text" name="page" value="${book.genre}"/>
+            <input type="text" name="page" value="${book.isbn}"/>
         </form>
 
         <button data-id="${book._id}">Delete Book</button>
@@ -50,17 +68,13 @@ export const onShowBookSuccess = (book) => {
 }
 
 export const onUpdateBookSuccess = () => {
-    messageContainer.innerText = "Book log updated"
+    messageContainer.innerText = "Book log edited"
 }
 
 export const onDeleteBookSuccess = () => {
     messageContainer.innerText = "Book deleted"
 }
 
-`<!-- Button trigger modal -->
-<button type="button" class="btn-update-book" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Update
-</button>`
 
 //REVIEW
 
