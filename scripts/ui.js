@@ -1,38 +1,42 @@
 const indexBookContainer = document.querySelector(".index-book-container")
 const messageContainer = document.querySelector("#message-container")
 const signUpMessage = document.querySelector("#sign-up-message")
-const showBookContainer = document.querySelector("#show-book-container")
 const userLoginContainer = document.querySelector(".user-login-container")
-const loginButton = document.querySelector("#login-button")
 const indexReviewContainer = document.querySelector("#index-review-container")
 const showReviewContainer = document.querySelector("#show-review-container")
+const bookShelfContainer = document.querySelector(".book-shelf-container")
 
 import { store } from "./store.js"
 
 //BOOK
 export const onIndexBookSuccess = (books) => {
-    const bookCount = 0
+    bookShelfContainer.innerHTML = ""
+    let output = `<div class='row shelf mx-5 mb-3'> <div     class="show-book-container d-flex justitfy-content-center col-3">
+                <!-- Button trigger create book modal -->
+                <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#new-book-modal"> +
+                </button>
+            </div>`
+    let bookCount = 1
     
     books.forEach(book => {
-        if(bookCount % 4 == 0) {
-            let bookShelf = document.createElement("div")
-            bookShelf.classList.add("row", "shelf")
-        }
-        const div = document.createElement("div")
-        div.classList.add("show-book-container", "col-1")
-        div.innerHTML = `
+        let showBookCover = `
             <!-- Button trigger edit modal -->
             <button data-id="${book._id}" type="button" class="btn-edit-book" data-bs-toggle="modal" data-bs-target="#edit-modal" style="display:inline-block">
-            <img src="${book.bookCoverUrl}" style="float:left"/>
+            <img src="${book.bookCoverUrl}" width="100px" height="150px"/>
             </button>
         `
-        bookShelf.appendChild(div)
-
-        if(bookShelf.childElementCount == 4) {
-            indexBookContainer.appendChild(bookShelf)
-        }
-        bookCount += 1
+        if((bookCount%4) == 0) {
+            output += `</div><div class="row shelf mx-5 mb-3"><div class="show-book-container d-flex justitfy-content-center col-3">${showBookCover}</div>`
+        } else {
+            output += `<div class="show-book-container d-flex justitfy-content-center col-3">${showBookCover}</div>`
+        } bookCount += 1
     })
+
+    if((bookCount%4)!=0) {
+        output += `</div>`
+    }
+
+    bookShelfContainer.insertAdjacentHTML("beforeend", output)
 }
 
 export const onBookFailure = (error) => {
@@ -74,7 +78,6 @@ export const onUpdateBookSuccess = () => {
 export const onDeleteBookSuccess = () => {
     messageContainer.innerText = "Book deleted"
 }
-
 
 //REVIEW
 
@@ -124,11 +127,6 @@ export const onDeleteReviewSuccess = () => {
     messageContainer.innerText = "Review deleted"
 }
 
-`<!-- Button trigger modal -->
-<button type="button" class="btn-update-review" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Update
-</button>`
-
 // User Actions
 export const onSignUpSuccess = () => {
     signUpMessage.innerHTML = "User created"
@@ -144,7 +142,7 @@ export const onSignInSuccess = (userToken) => {
 }
 
 export const onLoginFailure = (error) => {
-    messageContainer.innerHTML = `
+    signUpMessage.innerHTML = `
         <h3>Error detected</h3>
         <p>${error}</p>
     `

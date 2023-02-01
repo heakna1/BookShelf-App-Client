@@ -1,23 +1,24 @@
-import { 
-    indexBooks, 
-    createBook, 
-    showBook, 
-    updateBook, 
+import {
+    indexBooks,
+    createBook,
+    showBook,
+    updateBook,
     deleteBook,
     signUp,
     signIn,
     createReview,
     indexReviews,
     showReview,
-    updateReview, 
-    deleteReview } from "./api.js"
+    updateReview,
+    deleteReview
+} from "./api.js"
 import {
-    onIndexBookSuccess, 
-    onCreateBookSuccess, 
-    onShowBookSuccess, 
-    onUpdateBookSuccess, 
+    onIndexBookSuccess,
+    onCreateBookSuccess,
+    onShowBookSuccess,
+    onUpdateBookSuccess,
     onDeleteBookSuccess,
-    onBookFailure, 
+    onBookFailure,
     onSignUpSuccess,
     onSignInSuccess,
     onLoginFailure,
@@ -34,42 +35,60 @@ const signUpContainer = document.querySelector("#sign-up-form-container")
 const signInContainer = document.querySelector("#sign-in-form-container")
 const createBookForm = document.querySelector(".create-book-form")
 const indexBookContainer = document.querySelector(".index-book-container")
-const showBookContainer = document.querySelector(".show-book-container")
+const showBookModal = document.querySelectorAll(".btn-edit-book")
 const createReviewForm = document.querySelector(".create-review-form")
 const indexReviewContainer = document.querySelector(".index-review-container")
 const showReviewContainer = document.querySelector(".show-review-container")
+const deleteButton = document.querySelector("#delete-button")
+const saveButton = document.querySelector("#save-button")
+const editModalForm = document.querySelector("#edit-modal-form")
+const reviewModalForm = document.querySelector("#review-modal-form")
+
+const makeBookButtonsWork = () => {
+    
+    showBookModal.forEach(el => el.addEventListener("click", (event) => {
+            let id = event.target.getAttribute("data-id")
+            console.log(id)
+            deleteButton.setAttribute("data-id", id)
+            saveButton.setAttribute("data-id", id)
+
+        }))
+    }
 
 // User Actions
 signUpContainer.addEventListener("submit", (event) => {
-	event.preventDefault()
-	const userData = {
-		credentials: {
-			email: event.target["sign-up-email"].value,
-			password: event.target["sign-up-password"].value,
-		},
-	}
-	signUp(userData).then(onSignUpSuccess).catch(onLoginFailure)
+    event.preventDefault()
+    const userData = {
+        credentials: {
+            email: event.target["sign-up-email"].value,
+            password: event.target["sign-up-password"].value,
+        },
+    }
+    signUp(userData).then(onSignUpSuccess).catch(onLoginFailure)
 })
 
 signInContainer.addEventListener("submit", (event) => {
-	event.preventDefault()
-	const userData = {
-		credentials: {
-			email: event.target["email"].value,
-			password: event.target["password"].value,
-		},
-	}
-	signIn(userData)
-		.then((res) => res.json())
-		.then((res) => onSignInSuccess(res.token))
-		.then(indexBooks)
-		.then((res) => res.json())
-		.then((res) => onIndexBookSuccess(res.books))
-		.then(indexReviews)
-		.then((res) => res.json())
-		.then((res) => onIndexReviewSuccess(res.reviews))
-		.catch(onLoginFailure)
+    event.preventDefault()
+    const userData = {
+        credentials: {
+            email: event.target["email"].value,
+            password: event.target["password"].value,
+        },
+    }
+    signIn(userData)
+        .then((res) => res.json())
+        .then((res) => onSignInSuccess(res.token))
+        .then(indexBooks)
+        .then((res) => res.json())
+        .then((res) => onIndexBookSuccess(res.books))
+        .then(indexReviews)
+        .then((res) => res.json())
+        .then((res) => onIndexReviewSuccess(res.reviews))
+        .catch(onLoginFailure)
+
+        makeBookButtonsWork()
 })
+
 
 //BOOK
 indexBooks()
@@ -94,8 +113,13 @@ createBookForm.addEventListener("submit", (event) => {
     }
 
     createBook(bookData)
+        .then(indexBooks)
+        .then((res) => res.json())
+        .then((res) => onIndexBookSuccess(res.books))
         .then(onCreateBookSuccess)
         .catch(onBookFailure)
+
+        makeBookButtonsWork()
 })
 
 indexBookContainer.addEventListener("click", (event) => {
@@ -116,7 +140,10 @@ showBookContainer.addEventListener("submit", (event) => {
 
     const bookData = {
         book: {
-            page: event.target["page"].value,
+            title: event.target["book-title"].value,
+            author: event.target["book-author"].value,
+            genre: event.target["book-genre"].value,
+            isbn: event.target["book-isbn"].value
         },
     }
 
@@ -128,7 +155,7 @@ showBookContainer.addEventListener("submit", (event) => {
         .catch(onBookFailure)
 })
 
-showBookContainer.addEventListener("click", (event) => {
+deleteButton.addEventListener("click", (event) => {
     const id = event.target.getAttribute("data-id")
 
     if (!id) return
