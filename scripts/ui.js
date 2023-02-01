@@ -8,9 +8,31 @@ const bookShelfContainer = document.querySelector(".book-shelf-container")
 
 import { store } from "./store.js"
 
+// User Actions
+export const onSignUpSuccess = () => {
+    signUpMessage.innerHTML = "User created"
+}
+
+export const onSignInSuccess = (userToken) => {
+    messageContainer.innerHTML = ""
+    store.userToken = userToken
+    userLoginContainer.classList.add("d-none")
+    indexBookContainer.classList.remove("d-none")
+    messageContainer.classList.remove("d-none")
+    signUpMessage.classList.add("d-none")
+}
+
+export const onLoginFailure = (error) => {
+    signUpMessage.innerHTML = `
+        <h3>Error detected</h3>
+        <p>${error}</p>
+    `
+}
+
 //BOOK
 export const onIndexBookSuccess = (books) => {
     bookShelfContainer.innerHTML = ""
+    //button to create a new book
     let output = `<div class='row shelf mx-5 mb-3'> <div     class="show-book-container d-flex justitfy-content-center col-3">
                 <!-- Button trigger create book modal -->
                 <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#new-book-modal"> +
@@ -19,6 +41,7 @@ export const onIndexBookSuccess = (books) => {
     let bookCount = 1
     
     books.forEach(book => {
+        //book button that pulls up modal with edit and review options
         let showBookCover = `
             <!-- Button trigger edit modal -->
             <button data-id="${book._id}" type="button" class="btn-edit-book" data-bs-toggle="modal" data-bs-target="#edit-modal" style="display:inline-block">
@@ -26,6 +49,7 @@ export const onIndexBookSuccess = (books) => {
             </button>
         `
         if((bookCount%4) == 0) {
+            //makes book cover show up on book cover buttons
             output += `</div><div class="row shelf mx-5 mb-3"><div class="show-book-container d-flex justitfy-content-center col-3">${showBookCover}</div>`
         } else {
             output += `<div class="show-book-container d-flex justitfy-content-center col-3">${showBookCover}</div>`
@@ -80,7 +104,6 @@ export const onDeleteBookSuccess = () => {
 }
 
 //REVIEW
-
 export const onIndexReviewSuccess = (reviews) => {
     reviews.forEach(review => {
         const div = document.createElement("div")
@@ -125,25 +148,4 @@ export const onUpdateReviewSuccess = () => {
 
 export const onDeleteReviewSuccess = () => {
     messageContainer.innerText = "Review deleted"
-}
-
-// User Actions
-export const onSignUpSuccess = () => {
-    signUpMessage.innerHTML = "User created"
-}
-
-export const onSignInSuccess = (userToken) => {
-    messageContainer.innerHTML = ""
-    store.userToken = userToken
-    userLoginContainer.classList.add("d-none")
-    indexBookContainer.classList.remove("d-none")
-    messageContainer.classList.remove("d-none")
-    signUpMessage.classList.add("d-none")
-}
-
-export const onLoginFailure = (error) => {
-    signUpMessage.innerHTML = `
-        <h3>Error detected</h3>
-        <p>${error}</p>
-    `
 }

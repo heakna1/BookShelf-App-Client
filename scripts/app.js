@@ -29,8 +29,6 @@ import {
     onReviewFailure
 } from "./ui.js"
 
-const userLoginContainer = document.querySelector(".user-login-container")
-const signInButton = document.querySelector(".sign-in-button")
 const signUpContainer = document.querySelector("#sign-up-form-container")
 const signInContainer = document.querySelector("#sign-in-form-container")
 const createBookForm = document.querySelector(".create-book-form")
@@ -44,16 +42,16 @@ const saveButton = document.querySelector("#save-button")
 const editModalForm = document.querySelector("#edit-modal-form")
 const reviewModalForm = document.querySelector("#review-modal-form")
 
+//function used to make buttons in the modal in each book work
 const makeBookButtonsWork = () => {
-    
     showBookModal.forEach(el => el.addEventListener("click", (event) => {
-            let id = event.target.getAttribute("data-id")
-            console.log(id)
-            deleteButton.setAttribute("data-id", id)
-            saveButton.setAttribute("data-id", id)
+        let id = event.target.getAttribute("data-id")
+        console.log(id)
+        deleteButton.setAttribute("data-id", id)
+        saveButton.setAttribute("data-id", id)
 
-        }))
-    }
+    }))
+}
 
 // User Actions
 signUpContainer.addEventListener("submit", (event) => {
@@ -86,9 +84,8 @@ signInContainer.addEventListener("submit", (event) => {
         .then((res) => onIndexReviewSuccess(res.reviews))
         .catch(onLoginFailure)
 
-        makeBookButtonsWork()
+    makeBookButtonsWork()
 })
-
 
 //BOOK
 indexBooks()
@@ -119,7 +116,7 @@ createBookForm.addEventListener("submit", (event) => {
         .then(onCreateBookSuccess)
         .catch(onBookFailure)
 
-        makeBookButtonsWork()
+    makeBookButtonsWork()
 })
 
 indexBookContainer.addEventListener("click", (event) => {
@@ -216,7 +213,6 @@ showReviewContainer.addEventListener("submit", (event) => {
     if (!id) return
 
     updateReview(reviewData, id)
-        // this function (onUpdateReviewSuccess) does not need anything to run. NO params
         .then(onUpdateReviewSuccess)
         .catch(onReviewFailure)
 })
